@@ -22,4 +22,13 @@ export default defineConfig({
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
         },
     },
+
+  //Produciton changes
+  base: '', // leave this empty or use '/' if issues persist
+  server: {
+   hmr: {
+            host: 'jk-group-payroll-deploy-production.up.railway.app',
+            protocol: 'wss'
+        },
+  },
 });
