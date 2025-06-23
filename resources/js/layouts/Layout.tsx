@@ -129,7 +129,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           onClick={({ key }) => {
             const path = keyToPathMap[key];
             if (path) {
-              router.get(path);
+              router.visit(path);
             }
           }}
           items={menuItems}

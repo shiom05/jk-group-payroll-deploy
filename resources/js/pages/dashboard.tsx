@@ -1,6 +1,7 @@
 
 import Layout from '@/layouts/Layout';;
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
+import { Button } from 'antd';
 
 const dashboardArray = [
 
@@ -48,12 +49,12 @@ export default function Dashboard() {
                             <h3 className="text-2xl font-semibold text-gray-800 mb-2">{item.name}</h3>
                             <p className="text-gray-500 text-sm">Click to manage {item.name.toLowerCase()}</p>
                         </div>
-                        <Link
-                            href={item.link}
+                        <Button
+                            onClick={() => router.visit(item.link)}
                             className="block w-full text-center bg-[rgb(0,21,41)]! text-white! py-2 px-6 rounded-lg text-lg font-medium transition-all"
                         >
                             View
-                        </Link>
+                        </Button>
                     </div>
                 ))}
             </div>
