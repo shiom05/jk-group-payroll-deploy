@@ -20,23 +20,23 @@ use App\Http\Controllers\SecurityCompensationController;
 use App\Http\Controllers\PayrollController;
 
 
-Route::apiResource('api/securities', SecurityController::class)->middleware(['auth']);
-Route::get('api/all/securities', [SecurityController::class, 'getAllSecurities'])->middleware(['auth']);
+Route::apiResource('api/securities', SecurityController::class);
+Route::get('api/all/securities', [SecurityController::class, 'getAllSecurities']);
 // Route::apiResource('api/bank-details', BankDetailController::class)->withoutMiddleware(['auth:api']);
 
-Route::prefix('api/bank-details')->middleware('auth')->group(function () {
+Route::prefix('api/bank-details')->group(function () {
     Route::get('/{securityId}', [BankDetailController::class, 'getBySecurity']);
     Route::post('/', [BankDetailController::class, 'store']);
     Route::put('/{id}', [BankDetailController::class, 'update']);
 });
 
-Route::middleware('auth')->prefix('api/termination')->group(function () {
+Route::prefix('api/termination')->group(function () {
     Route::post('/securities/{security}/resign', [SecurityController::class, 'resign']);
     Route::post('/securities/{security}/rehire', [SecurityController::class, 'rehire']);
 });
 
 
-Route::prefix('api/security-leaves')->middleware('auth')->group(function () {
+Route::prefix('api/security-leaves')->group(function () {
     Route::get('/', [LeaveController::class, 'index']);
     Route::get('/security/{securityId}', [LeaveController::class, 'getLeavesBySecurity']);
     Route::get('/{id}', [LeaveController::class, 'show']);
@@ -45,13 +45,13 @@ Route::prefix('api/security-leaves')->middleware('auth')->group(function () {
     Route::delete('/{leave}', [LeaveController::class, 'destroy']);
 });
 
-Route::prefix('api/security-leave-balances')->middleware('auth')->group(function () {
+Route::prefix('api/security-leave-balances')->group(function () {
     Route::get('/security/{securityId}', [LeaveBalanceController::class, 'getLeaveBalanceBySecurity']);
     Route::post('/', [LeaveBalanceController::class, 'store']);
 });
 
 
-Route::prefix('api/inventory')->middleware('auth')->group(function () {
+Route::prefix('api/inventory')->group(function () {
     Route::get('/types', [InventoryTypeController::class, 'index']);
     Route::post('/', [InventoryItemsController::class, 'store']);
     Route::get('/', [InventoryItemsController::class, 'index']);
@@ -72,7 +72,7 @@ Route::prefix('api/inventory')->middleware('auth')->group(function () {
 });
 
 
-Route::prefix('api/expenses')->middleware('auth')->group(function () {
+Route::prefix('api/expenses')->group(function () {
     Route::get('/security', [SecurityExpensesController::class, 'index']);
     Route::post('/security', [SecurityExpensesController::class, 'store']);
     Route::put('/security/{securityExpense}', [SecurityExpensesController::class, 'update']);
@@ -81,7 +81,7 @@ Route::prefix('api/expenses')->middleware('auth')->group(function () {
     Route::get('/security/{securityId}/current-month', [SecurityExpensesController::class, 'getCurrentMonthExpenseBySecurity']);
 });
 
-Route::prefix('api/loans')->middleware('auth')->group(function () {
+Route::prefix('api/loans')->group(function () {
     Route::get('/security', [SecurityLoansController::class, 'index']);
     Route::post('/security', [SecurityLoansController::class, 'store']);
     Route::put('/security/{securityLoan}', [SecurityLoansController::class, 'update']);
@@ -91,7 +91,7 @@ Route::prefix('api/loans')->middleware('auth')->group(function () {
     Route::get('/security/{securityId}/current-month/payroll', [SecurityLoansController::class, 'getLoansForPayroll']);
 });
 
-Route::prefix('api/locations')->middleware('auth')->group(function () {
+Route::prefix('api/locations')->group(function () {
     Route::get('/', [LocationsController::class, 'index']);
     
     // Create a new location (POST /api/locations)
@@ -106,7 +106,7 @@ Route::prefix('api/locations')->middleware('auth')->group(function () {
 });
 
 
-Route::prefix('api/locations-allocations')->middleware('auth')->group(function () {
+Route::prefix('api/locations-allocations')->group(function () {
     Route::get('/', [SecurityLocationAllocationController::class, 'index']);
     
     Route::post('/allocate-security', [SecurityLocationAllocationController::class, 'store']); // Assign security to location
@@ -117,7 +117,7 @@ Route::prefix('api/locations-allocations')->middleware('auth')->group(function (
 });
 
 
-Route::prefix('api/log-shift')->middleware('auth')->group(function () {
+Route::prefix('api/log-shift')->group(function () {
     Route::get('/', [SecurityShiftLogController::class, 'index']); // Get all shifts
 
     Route::get('/security/{securityId}', [SecurityShiftLogController::class, 'getBySecurityId']); // Get shifts by security ID
@@ -129,7 +129,7 @@ Route::prefix('api/log-shift')->middleware('auth')->group(function () {
     Route::delete('/delete/{id}', [SecurityShiftLogController::class, 'destroy']); // Delete a shift
 });
 
-Route::prefix('api/security-black-marks')->middleware('auth')->group(function () {
+Route::prefix('api/security-black-marks')->group(function () {
     
     Route::get('/', [SecurityBlackMarkController::class, 'index']);
     Route::post('/', [SecurityBlackMarkController::class, 'store']);
@@ -147,7 +147,7 @@ Route::prefix('api/security-black-marks')->middleware('auth')->group(function ()
 });
 
 
-Route::prefix('api/compensation')->middleware('auth')->group(function () {
+Route::prefix('api/compensation')->group(function () {
     Route::get('/', [SecurityCompensationController::class, 'index']);
     Route::post('/', [SecurityCompensationController::class, 'store']);
     Route::put('/{compensation}', [SecurityCompensationController::class, 'update']);
@@ -158,7 +158,7 @@ Route::prefix('api/compensation')->middleware('auth')->group(function () {
 
 });
 
-Route::prefix('api/payrolls')->middleware('auth')->group(function () {
+Route::prefix('api/payrolls')->group(function () {
     // Basic CRUD routes
     Route::get('/', [PayrollController::class, 'index']);
     Route::post('/', [PayrollController::class, 'store']);
